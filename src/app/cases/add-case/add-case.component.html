@@ -1,0 +1,38 @@
+<h1 class="mt-5 text-3xl font-bold text-center">Add New Case</h1>
+
+<form
+  class="w-1/4 mt-5 mx-auto flex flex-wrap justify-center"
+  [formGroup]="addCaseForm"
+  (ngSubmit)="submitAddCaseForm()"
+>
+  <p-inputgroup styleClass="mb-3">
+    <p-inputgroup-addon>www</p-inputgroup-addon>
+    <input
+      pInputText
+      placeholder="Radiopaedia URL"
+      formControlName="url"
+      [ngClass]="{
+        'ng-dirty':
+          addCaseForm.get('url')?.touched && addCaseForm.get('url')?.invalid
+      }"
+    />
+  </p-inputgroup>
+
+  @if (addCaseForm.get('url')?.touched &&
+  addCaseForm.get('url')?.hasError('required')) {
+  <p class="w-full mt-2 text-center text-red-600">
+    "Radiopaedia" URL is required.
+  </p>
+  } @if (addCaseForm.get('url')?.touched &&
+  (addCaseForm.get('url')?.hasError('radiopaediaMissing') ||
+  addCaseForm.get('url')?.hasError('urlInvalid'))) {
+  <p class="w-full mt-2 text-center text-red-600">Invalid "Radiopaedia" URL.</p>
+  }
+
+  <p-button
+    type="submit"
+    label="Submit"
+    styleClass="mt-5 mx-auto"
+    [loading]="isLoading()"
+  />
+</form>

@@ -1,0 +1,43 @@
+<p-toast />
+
+<h1 class="mt-5 text-3xl font-bold text-center">Cases</h1>
+
+<p-table
+  [paginator]="true"
+  [rows]="10"
+  [value]="cases()"
+  styleClass="w-3/4 md:w-1/2 mt-5 mx-auto"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex justify-center">
+      <p-iconfield iconPosition="left">
+        <p-inputicon>
+          <i class="pi pi-search"></i>
+        </p-inputicon>
+        <input pInputText type="text" placeholder="Search" />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th class="text-center">Title</th>
+      <th class="text-center">Thumbnail</th>
+      <th class="text-center">Added On</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-case>
+    <tr>
+      <td>
+        <a [routerLink]="['.', case._id]" class="underline">{{ case.title }}</a>
+      </td>
+      <td>
+        <img
+          [src]="case.thumbnail"
+          [alt]="case.title"
+          class="w-24 h-24 mx-auto rounded-full"
+        />
+      </td>
+      <td>{{ case.createdAt | date }}</td>
+    </tr>
+  </ng-template>
+</p-table>

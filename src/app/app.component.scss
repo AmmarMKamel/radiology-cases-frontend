@@ -1,0 +1,15 @@
+:host {
+  ::ng-deep .menubar {
+    .p-menubar-end {
+      display: none;
+    }
+  }
+}
+
+@media screen and (min-width: 961px) {
+  :host {
+    ::ng-deep .menubar {
+      justify-content: center;
+    }
+  }
+}

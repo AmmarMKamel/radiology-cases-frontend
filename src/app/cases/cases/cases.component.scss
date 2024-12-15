@@ -1,0 +1,9 @@
+:host {
+  ::ng-deep .p-datatable-thead > tr > th {
+    text-align: center;
+  }
+
+  ::ng-deep .p-datatable-tbody > tr > td {
+    text-align: center;
+  }
+}

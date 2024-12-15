@@ -1,0 +1,16 @@
+<article
+  class="border border-stone-400 cursor-pointer"
+  [ngClass]="{ '!border-lime-500': active }"
+  (click)="markAsActive()"
+>
+  <div class="bg-black">
+    <img
+      [src]="subCase.thumbnail"
+      [alt]="subCase.title"
+      class="min-h-40 max-h-40 mx-auto object-contain"
+    />
+  </div>
+  <footer class="py-3 text-center border-t border-t-stone-400">
+    {{ subCase.title }}
+  </footer>
+</article>
