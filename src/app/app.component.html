@@ -1,11 +1,13 @@
 <p-toast />
 
 <div class="min-h-screen flex justify-center flex-wrap">
+  @if (showMenubar()) {
   <p-menubar
     [model]="items"
     styleClass="menubar w-full"
     class="w-full"
   ></p-menubar>
+  }
   <main class="w-full">
     <router-outlet></router-outlet>
   </main>
