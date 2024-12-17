@@ -27,7 +27,9 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        this.showMenubar.set(!event.url.startsWith('/cases/'));
+        this.showMenubar.set(
+          !event.url.startsWith('/cases/') || event.url.includes('add')
+        );
       });
   }
 }
