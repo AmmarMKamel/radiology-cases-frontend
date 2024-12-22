@@ -28,16 +28,12 @@
   </ng-template>
   <ng-template #header>
     <tr>
-      <th class="text-center">Title</th>
       <th class="text-center">Thumbnail</th>
       <th class="text-center">Added On</th>
     </tr>
   </ng-template>
   <ng-template #body let-case>
     <tr>
-      <td>
-        <a [routerLink]="['.', case._id]" class="underline">{{ case.title }}</a>
-      </td>
       <td>
         <img
           [src]="case.thumbnail"
