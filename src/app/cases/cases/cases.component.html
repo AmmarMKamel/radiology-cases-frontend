@@ -6,7 +6,10 @@
   [paginator]="true"
   [rows]="10"
   [value]="cases()"
+  [totalRecords]="totalCases()"
+  [lazy]="true"
   styleClass="w-3/4 md:w-1/2 mt-5 mx-auto"
+  (onPage)="pageChange($event)"
 >
   <ng-template pTemplate="caption">
     <div class="flex justify-center">
@@ -14,7 +17,12 @@
         <p-inputicon>
           <i class="pi pi-search"></i>
         </p-inputicon>
-        <input pInputText type="text" placeholder="Search" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Search"
+          [formControl]="searchTerm"
+        />
       </p-iconfield>
     </div>
   </ng-template>

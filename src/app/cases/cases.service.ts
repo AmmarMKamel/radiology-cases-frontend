@@ -36,9 +36,14 @@ export class CasesService {
 
   constructor(private http: HttpClient) {}
 
-  getCases(): Observable<CasesAPIResponse> {
+  getCases(page: number, searchTerm: string): Observable<CasesAPIResponse> {
+    let url = `${this.apiUrl}?page=${page}`;
+    if (searchTerm) {
+      url += `&q=${searchTerm}`;
+    }
+
     return this.http
-      .get<CasesAPIResponse>(this.apiUrl)
+      .get<CasesAPIResponse>(url)
       .pipe(catchError(this.handleError('getCases')));
   }
 
