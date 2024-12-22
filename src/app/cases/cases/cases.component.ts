@@ -12,7 +12,7 @@ import { InputGroupAddon } from 'primeng/inputgroupaddon';
 import { InputText } from 'primeng/inputtext';
 import { Button } from 'primeng/button';
 import { Toast } from 'primeng/toast';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
@@ -46,6 +46,7 @@ export class CasesComponent implements OnInit {
   addCaseForm: FormGroup = new FormGroup({});
   isLoading = signal<boolean>(false);
   cases = signal<Case[]>([]);
+  totalCases = signal<number>(0);
 
   constructor(
     private router: Router,
@@ -64,10 +65,11 @@ export class CasesComponent implements OnInit {
     });
   }
 
-  getCases(): void {
-    this.casesService.getCases().subscribe({
+  getCases(page: number = 1): void {
+    this.casesService.getCases(page).subscribe({
       next: (response) => {
         this.cases.set(response.cases);
+        this.totalCases.set(response.total);
       },
       error: () => {
         this.messageService.add({
@@ -78,5 +80,10 @@ export class CasesComponent implements OnInit {
         });
       },
     });
+  }
+
+  pageChange(event: TablePageEvent): void {
+    const page = event.first / event.rows + 1;
+    this.getCases(page);
   }
 }

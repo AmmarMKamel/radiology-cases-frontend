@@ -36,9 +36,11 @@ export class CasesService {
 
   constructor(private http: HttpClient) {}
 
-  getCases(): Observable<CasesAPIResponse> {
+  getCases(page: number): Observable<CasesAPIResponse> {
+    const url = `${this.apiUrl}?page=${page}`;
+
     return this.http
-      .get<CasesAPIResponse>(this.apiUrl)
+      .get<CasesAPIResponse>(url)
       .pipe(catchError(this.handleError('getCases')));
   }
 
