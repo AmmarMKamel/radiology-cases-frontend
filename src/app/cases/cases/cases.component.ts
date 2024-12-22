@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule, DatePipe, NgClass } from '@angular/common';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -22,6 +23,7 @@ import { urlValidator } from '../validators/url.validator';
 import { radiopaediaValidator } from '../validators/radiopaedia.validator';
 import { Case, CasesService } from '../cases.service';
 import { Router, RouterLink } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-add-case',
@@ -37,6 +39,7 @@ import { Router, RouterLink } from '@angular/router';
     TableModule,
     InputIcon,
     IconField,
+    ReactiveFormsModule,
   ],
   templateUrl: './cases.component.html',
   styleUrl: './cases.component.scss',
@@ -47,6 +50,8 @@ export class CasesComponent implements OnInit {
   isLoading = signal<boolean>(false);
   cases = signal<Case[]>([]);
   totalCases = signal<number>(0);
+  searchTerm = new FormControl('');
+  currnetPage = signal<number>(1);
 
   constructor(
     private router: Router,
@@ -57,6 +62,12 @@ export class CasesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCases();
+
+    this.searchTerm.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((term) => {
+        this.getCases(this.currnetPage(), term?.trim());
+      });
   }
 
   initAddCaseForm(): void {
@@ -65,8 +76,8 @@ export class CasesComponent implements OnInit {
     });
   }
 
-  getCases(page: number = 1): void {
-    this.casesService.getCases(page).subscribe({
+  getCases(page: number = 1, searchTerm: string = ''): void {
+    this.casesService.getCases(page, searchTerm).subscribe({
       next: (response) => {
         this.cases.set(response.cases);
         this.totalCases.set(response.total);
@@ -83,7 +94,7 @@ export class CasesComponent implements OnInit {
   }
 
   pageChange(event: TablePageEvent): void {
-    const page = event.first / event.rows + 1;
-    this.getCases(page);
+    this.currnetPage.set(event.first / event.rows + 1);
+    this.getCases(this.currnetPage());
   }
 }

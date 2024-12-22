@@ -17,7 +17,12 @@
         <p-inputicon>
           <i class="pi pi-search"></i>
         </p-inputicon>
-        <input pInputText type="text" placeholder="Search" />
+        <input
+          pInputText
+          type="text"
+          placeholder="Search"
+          [formControl]="searchTerm"
+        />
       </p-iconfield>
     </div>
   </ng-template>
