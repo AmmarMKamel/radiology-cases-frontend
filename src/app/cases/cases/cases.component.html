@@ -35,11 +35,13 @@
   <ng-template #body let-case>
     <tr>
       <td>
-        <img
-          [src]="case.thumbnail"
-          [alt]="case.title"
-          class="w-24 h-24 mx-auto rounded-full"
-        />
+        <a [routerLink]="['.', case._id]">
+          <img
+            [src]="case.thumbnail"
+            [alt]="case.title"
+            class="w-24 h-24 mx-auto rounded-full"
+          />
+        </a>
       </td>
       <td>{{ case.createdAt | date }}</td>
     </tr>
