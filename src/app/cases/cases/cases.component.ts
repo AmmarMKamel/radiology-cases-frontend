@@ -66,6 +66,7 @@ export class CasesComponent implements OnInit {
     this.searchTerm.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe((term) => {
+        this.currnetPage.set(1);
         this.getCases(this.currnetPage(), term?.trim());
       });
   }
